@@ -40,9 +40,9 @@ static void sum(const const_aligned_elem_ptr __restrict__ a,
     }
 }
 
-static void sum_vec(const const_aligned_vN_elem_ptr __restrict__ a,
-                    const const_aligned_vN_elem_ptr __restrict__ b,
-                    aligned_vN_elem_ptr __restrict__ o, uint32_t n) {
+static void sum_vec(const const_aligned_elem_ptr __restrict__ a,
+                    const const_aligned_elem_ptr __restrict__ b, aligned_elem_ptr __restrict__ o,
+                    uint32_t n) {
     if ((n + 1) * vec_type_num_elem >= vec_num_elem_max) {
         __builtin_unreachable();
     }
@@ -58,9 +58,9 @@ static vN_elem_t sum_single_vec(const vN_elem_t a, const vN_elem_t b) {
     return a + b;
 }
 
-static void sum_vec_helper(const const_aligned_vN_elem_ptr __restrict__ a,
-                           const const_aligned_vN_elem_ptr __restrict__ b,
-                           aligned_vN_elem_ptr __restrict__ o, uint32_t n) {
+static void sum_vec_helper(const const_aligned_elem_ptr __restrict__ a,
+                           const const_aligned_elem_ptr __restrict__ b,
+                           aligned_elem_ptr __restrict__ o, uint32_t n) {
     if ((n + 1) * vec_type_num_elem >= vec_num_elem_max) {
         __builtin_unreachable();
     }
@@ -110,7 +110,7 @@ static uint8_t *get_zero_buf(size_t sz) {
 static void BM_sum(benchmark::State &state) {
     auto a = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
     auto b = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
-    auto o = (const aligned_elem_ptr)get_zero_buf(vec_size_bytes);
+    auto o = (aligned_elem_ptr)get_zero_buf(vec_size_bytes);
     for (auto _ : state) {
         sum(a, b, o, vec_num_elem);
         first_sum = o[0];
@@ -126,9 +126,9 @@ static void BM_sum(benchmark::State &state) {
 BENCHMARK(BM_sum);
 
 static void BM_sum_vec(benchmark::State &state) {
-    auto a = (const const_aligned_vN_elem_ptr)get_rand_buf(vec_size_bytes);
-    auto b = (const const_aligned_vN_elem_ptr)get_rand_buf(vec_size_bytes);
-    auto o = (const aligned_vN_elem_ptr)get_zero_buf(vec_size_bytes);
+    auto a = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
+    auto b = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
+    auto o = (aligned_elem_ptr)get_zero_buf(vec_size_bytes);
     for (auto _ : state) {
         sum_vec(a, b, o, vec_num_elem);
         first_sum = o[0][0];
@@ -144,9 +144,9 @@ static void BM_sum_vec(benchmark::State &state) {
 BENCHMARK(BM_sum_vec);
 
 static void BM_sum_vec_helper(benchmark::State &state) {
-    auto a = (const const_aligned_vN_elem_ptr)get_rand_buf(vec_size_bytes);
-    auto b = (const const_aligned_vN_elem_ptr)get_rand_buf(vec_size_bytes);
-    auto o = (const aligned_vN_elem_ptr)get_zero_buf(vec_size_bytes);
+    auto a = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
+    auto b = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
+    auto o = (aligned_elem_ptr)get_zero_buf(vec_size_bytes);
     for (auto _ : state) {
         sum_vec_helper(a, b, o, vec_num_elem);
         first_sum = o[0][0];
@@ -164,7 +164,7 @@ BENCHMARK(BM_sum_vec_helper);
 static void BM_sum_ispc(benchmark::State &state) {
     auto a = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
     auto b = (const const_aligned_elem_ptr)get_rand_buf(vec_size_bytes);
-    auto o = (const aligned_elem_ptr)get_zero_buf(vec_size_bytes);
+    auto o = (aligned_elem_ptr)get_zero_buf(vec_size_bytes);
     for (auto _ : state) {
         sum_ispc(a, b, o, vec_num_elem);
         first_sum = o[0];

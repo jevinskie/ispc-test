@@ -84,6 +84,6 @@ HEDLEY_STATIC_ASSERT(vec_size_bytes % ALIGNMENT == 0, "vec_size_bytes % ALIGNMEN
 #define vec_num_elem ((u32)(vec_size_bytes / sizeof(vec_elem_t)))
 HEDLEY_STATIC_ASSERT(vec_num_elem < vec_num_elem_max, "vec_num_elem < vec_num_elem_max");
 
-// extern "C" sum_ispc(const const_aligned_elem_ptr __restrict__ a,
-//                 const const_aligned_elem_ptr __restrict__ b, aligned_elem_ptr __restrict__ o,
-//                 uint32_t n);
+extern "C" sum_ispc(const const_aligned_elem_ptr __restrict__ a,
+                const const_aligned_elem_ptr __restrict__ b, aligned_elem_ptr __restrict__ o,
+                uint32_t n);
