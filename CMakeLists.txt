@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(ispc-microbenchmarks CXX)
+project(ispc-microbenchmarks CXX ISPC)
 
 option(FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." ON)
 
@@ -34,7 +34,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/googletest EXCLUDE_FROM_AL
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/benchmark EXCLUDE_FROM_ALL)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/gflags EXCLUDE_FROM_ALL)
 
-add_executable(ispc-u32 ispc-u32.cpp)
+add_executable(ispc-u32 ispc-u32.cpp ispc-u32.ispc)
 
 target_link_libraries(ispc-u32 PRIVATE benchmark gflags)
 target_compile_options(ispc-u32 PRIVATE -Wall -Wextra -Wpedantic -Wno-gnu-line-marker)
