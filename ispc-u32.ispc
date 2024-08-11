@@ -1,4 +1,4 @@
-#include "iscp-u32.h"
+#include "ispc-u32.h"
 
 export void sum_ispc(const uniform vec_elem_t a[], const uniform vec_elem_t b[], uniform vec_elem_t o[], const uniform uint32 n) {
     assume(!((uintptr_t)a % ALIGNMENT));

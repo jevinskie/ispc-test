@@ -1,6 +1,6 @@
 	.text
 	.intel_syntax noprefix
-	.file	"iscp-u32.ispc"
+	.file	"ispc-u32.ispc"
 	.globl	sum_ispc___un_3C_Cunu_3E_un_3C_Cunu_3E_un_3C_unu_3E_Cunu # -- Begin function sum_ispc___un_3C_Cunu_3E_un_3C_Cunu_3E_un_3C_unu_3E_Cunu
 	.p2align	4, 0x90
 	.type	sum_ispc___un_3C_Cunu_3E_un_3C_Cunu_3E_un_3C_unu_3E_Cunu,@function
