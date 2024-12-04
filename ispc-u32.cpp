@@ -23,9 +23,8 @@ DEFINE_int32(rand_seed, -1, "Random seed (use < 0 for non-deterministic)");
 static std::random_device rand_dev;
 static std::mt19937_64 rand_gen(FLAGS_rand_seed < 0 ? rand_dev() : FLAGS_rand_seed);
 
-static void sum(const const_aligned_elem_ptr __restrict__ a,
-                const const_aligned_elem_ptr __restrict__ b, aligned_elem_ptr __restrict__ o,
-                uint32_t n) {
+static void sum(const const_aligned_elem_ptr RESTRICT a, const const_aligned_elem_ptr RESTRICT b,
+                aligned_elem_ptr RESTRICT o, uint32_t n) {
     if ((n + 1) * vec_type_num_elem >= vec_num_elem_max) {
         __builtin_unreachable();
     }
@@ -40,9 +39,8 @@ static void sum(const const_aligned_elem_ptr __restrict__ a,
     }
 }
 
-static void sum_vec(const const_aligned_elem_ptr __restrict__ a,
-                    const const_aligned_elem_ptr __restrict__ b, aligned_elem_ptr __restrict__ o,
-                    uint32_t n) {
+static void sum_vec(const const_aligned_elem_ptr RESTRICT a, const const_aligned_elem_ptr RESTRICT b,
+                    aligned_elem_ptr RESTRICT o, uint32_t n) {
     if ((n + 1) * vec_type_num_elem >= vec_num_elem_max) {
         __builtin_unreachable();
     }
@@ -58,9 +56,8 @@ static vN_elem_t sum_single_vec(const vN_elem_t a, const vN_elem_t b) {
     return a + b;
 }
 
-static void sum_vec_helper(const const_aligned_elem_ptr __restrict__ a,
-                           const const_aligned_elem_ptr __restrict__ b,
-                           aligned_elem_ptr __restrict__ o, uint32_t n) {
+static void sum_vec_helper(const const_aligned_elem_ptr RESTRICT a, const const_aligned_elem_ptr RESTRICT b,
+                           aligned_elem_ptr RESTRICT o, uint32_t n) {
     if ((n + 1) * vec_type_num_elem >= vec_num_elem_max) {
         __builtin_unreachable();
     }
@@ -78,8 +75,8 @@ static uint8_t *alloc_vec(size_t sz) {
     const auto alloc_res = posix_memalign((void **)&res, ALIGNMENT, sz);
     if (alloc_res) {
         const auto cerrno = errno;
-        fprintf(stderr, "posix_memalign of %zu bytes returned errno %d aka '%s'\n", vec_size_bytes,
-                cerrno, strerror(cerrno));
+        fprintf(stderr, "posix_memalign of %zu bytes returned errno %d aka '%s'\n", vec_size_bytes, cerrno,
+                strerror(cerrno));
         assert(false && "alloc_vec failed");
     }
     return res;
