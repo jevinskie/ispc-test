@@ -76,9 +76,8 @@ static vN_elem_t sum_single_vec(const vN_elem_t a, const vN_elem_t b) {
     return a + b;
 }
 
-static void sum_vec_helper(const const_aligned_vN_elem_ptr RESTRICT a,
-                           const const_aligned_vN_elem_ptr RESTRICT b, aligned_vN_elem_ptr RESTRICT o,
-                           uint32_t n) {
+static void sum_vec_helper(const const_aligned_vN_elem_ptr RESTRICT a, const const_aligned_vN_elem_ptr RESTRICT b,
+                           aligned_vN_elem_ptr RESTRICT o, uint32_t n) {
     if ((n + 1) * vec_type_num_elem >= vec_num_elem_max) {
         __builtin_unreachable();
     }
